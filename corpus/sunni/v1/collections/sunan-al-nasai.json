@@ -1,0 +1,13 @@
+{
+  "collection_id": "sunan-al-nasai",
+  "titles": {
+    "english": "Sunan al-Nasa'i",
+    "arabic": "سنن النسائي"
+  },
+  "author": {
+    "name": "Ahmad ibn Shu'ayb al-Nasa'i",
+    "death_year_hijri": null
+  },
+  "hadith_count": 5685,
+  "section_count": 2533
+}

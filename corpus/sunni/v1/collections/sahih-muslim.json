@@ -1,0 +1,13 @@
+{
+  "collection_id": "sahih-muslim",
+  "titles": {
+    "english": "Sahih Muslim",
+    "arabic": "صحيح مسلم"
+  },
+  "author": {
+    "name": "Muslim ibn al-Hajjaj",
+    "death_year_hijri": null
+  },
+  "hadith_count": 7368,
+  "section_count": 1391
+}

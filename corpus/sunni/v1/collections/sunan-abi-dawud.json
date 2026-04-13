@@ -1,0 +1,13 @@
+{
+  "collection_id": "sunan-abi-dawud",
+  "titles": {
+    "english": "Sunan Abi Dawud",
+    "arabic": "سنن أبي داود"
+  },
+  "author": {
+    "name": "Abu Dawud Sulayman ibn al-Ash'ath",
+    "death_year_hijri": null
+  },
+  "hadith_count": 5276,
+  "section_count": 1935
+}

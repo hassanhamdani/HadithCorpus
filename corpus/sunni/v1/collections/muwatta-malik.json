@@ -1,0 +1,13 @@
+{
+  "collection_id": "muwatta-malik",
+  "titles": {
+    "english": "Muwatta Malik",
+    "arabic": "موطأ مالك"
+  },
+  "author": {
+    "name": "Malik ibn Anas",
+    "death_year_hijri": null
+  },
+  "hadith_count": 1854,
+  "section_count": 61
+}

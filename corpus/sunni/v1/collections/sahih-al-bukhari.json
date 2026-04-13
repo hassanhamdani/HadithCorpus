@@ -1,0 +1,13 @@
+{
+  "collection_id": "sahih-al-bukhari",
+  "titles": {
+    "english": "Sahih al-Bukhari",
+    "arabic": "صحيح البخاري"
+  },
+  "author": {
+    "name": "Muhammad ibn Isma'il al-Bukhari",
+    "death_year_hijri": null
+  },
+  "hadith_count": 7277,
+  "section_count": 4058
+}

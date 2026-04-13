@@ -1,0 +1,14 @@
+{
+  "collection_id": "nahj-al-balagha",
+  "name_ar": "نهج البلاغة",
+  "name_en": "Nahj al-Balagha",
+  "author_ar": "الشريف الرضي",
+  "author_en": "al-Sharif al-Radi",
+  "book_section_count": 3,
+  "chapter_count": 800,
+  "hadith_count": 2260,
+  "volume_count": 1,
+  "volume_pointers": [
+    "32"
+  ]
+}

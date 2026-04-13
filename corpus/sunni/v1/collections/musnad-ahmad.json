@@ -1,0 +1,13 @@
+{
+  "collection_id": "musnad-ahmad",
+  "titles": {
+    "english": "Musnad Ahmad ibn Hanbal",
+    "arabic": "مسند الإمام أحمد بن حنبل"
+  },
+  "author": {
+    "name": "Ahmad ibn Hanbal",
+    "death_year_hijri": null
+  },
+  "hadith_count": 1374,
+  "section_count": 8
+}

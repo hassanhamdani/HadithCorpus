@@ -1,0 +1,21 @@
+{
+  "collection_id": "al-kafi",
+  "name_ar": "الكافي",
+  "name_en": "Al-Kafi",
+  "author_ar": "محمد بن يعقوب الكليني",
+  "author_en": "Muhammad ibn Ya'qub al-Kulayni",
+  "book_section_count": 34,
+  "chapter_count": 2722,
+  "hadith_count": 14249,
+  "volume_count": 8,
+  "volume_pointers": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ]
+}

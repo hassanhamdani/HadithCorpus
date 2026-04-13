@@ -1,0 +1,122 @@
+{
+  "traditions": {
+    "shia": {
+      "collection_count": 3,
+      "section_count": 4568,
+      "hadith_count": 22911,
+      "collections": [
+        {
+          "collection_id": "al-kafi",
+          "titles": {
+            "english": "Al-Kafi",
+            "arabic": "الكافي"
+          },
+          "hadith_count": 14249,
+          "section_count": 2722
+        },
+        {
+          "collection_id": "man-la-yahduruhu-al-faqih",
+          "titles": {
+            "english": "Man La Yahduruhu al-Faqih",
+            "arabic": "من لا يحضره الفقيه"
+          },
+          "hadith_count": 6402,
+          "section_count": 1046
+        },
+        {
+          "collection_id": "nahj-al-balagha",
+          "titles": {
+            "english": "Nahj al-Balagha",
+            "arabic": "نهج البلاغة"
+          },
+          "hadith_count": 2260,
+          "section_count": 800
+        }
+      ]
+    },
+    "sunni": {
+      "collection_count": 8,
+      "section_count": 13777,
+      "hadith_count": 37232,
+      "collections": [
+        {
+          "collection_id": "jami-al-tirmidhi",
+          "titles": {
+            "english": "Jami' al-Tirmidhi",
+            "arabic": "جامع الترمذي"
+          },
+          "hadith_count": 4053,
+          "section_count": 2238
+        },
+        {
+          "collection_id": "musnad-ahmad",
+          "titles": {
+            "english": "Musnad Ahmad ibn Hanbal",
+            "arabic": "مسند الإمام أحمد بن حنبل"
+          },
+          "hadith_count": 1374,
+          "section_count": 8
+        },
+        {
+          "collection_id": "muwatta-malik",
+          "titles": {
+            "english": "Muwatta Malik",
+            "arabic": "موطأ مالك"
+          },
+          "hadith_count": 1854,
+          "section_count": 61
+        },
+        {
+          "collection_id": "sahih-al-bukhari",
+          "titles": {
+            "english": "Sahih al-Bukhari",
+            "arabic": "صحيح البخاري"
+          },
+          "hadith_count": 7277,
+          "section_count": 4058
+        },
+        {
+          "collection_id": "sahih-muslim",
+          "titles": {
+            "english": "Sahih Muslim",
+            "arabic": "صحيح مسلم"
+          },
+          "hadith_count": 7368,
+          "section_count": 1391
+        },
+        {
+          "collection_id": "sunan-abi-dawud",
+          "titles": {
+            "english": "Sunan Abi Dawud",
+            "arabic": "سنن أبي داود"
+          },
+          "hadith_count": 5276,
+          "section_count": 1935
+        },
+        {
+          "collection_id": "sunan-al-nasai",
+          "titles": {
+            "english": "Sunan al-Nasa'i",
+            "arabic": "سنن النسائي"
+          },
+          "hadith_count": 5685,
+          "section_count": 2533
+        },
+        {
+          "collection_id": "sunan-ibn-majah",
+          "titles": {
+            "english": "Sunan Ibn Majah",
+            "arabic": "سنن ابن ماجه"
+          },
+          "hadith_count": 4345,
+          "section_count": 1553
+        }
+      ]
+    }
+  },
+  "totals": {
+    "collection_count": 11,
+    "section_count": 18345,
+    "hadith_count": 60143
+  }
+}

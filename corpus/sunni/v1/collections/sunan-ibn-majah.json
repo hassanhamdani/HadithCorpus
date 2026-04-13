@@ -1,0 +1,13 @@
+{
+  "collection_id": "sunan-ibn-majah",
+  "titles": {
+    "english": "Sunan Ibn Majah",
+    "arabic": "سنن ابن ماجه"
+  },
+  "author": {
+    "name": "Ibn Majah",
+    "death_year_hijri": null
+  },
+  "hadith_count": 4345,
+  "section_count": 1553
+}

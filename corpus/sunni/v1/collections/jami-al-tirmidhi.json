@@ -1,0 +1,13 @@
+{
+  "collection_id": "jami-al-tirmidhi",
+  "titles": {
+    "english": "Jami' al-Tirmidhi",
+    "arabic": "جامع الترمذي"
+  },
+  "author": {
+    "name": "Muhammad ibn 'Isa al-Tirmidhi",
+    "death_year_hijri": null
+  },
+  "hadith_count": 4053,
+  "section_count": 2238
+}
