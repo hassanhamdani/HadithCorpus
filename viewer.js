@@ -84,11 +84,42 @@ async function fetchJsonl(path) {
   return records;
 }
 
-function getActiveFilePath() {
-  return `./corpus/${traditionSelect.value}/v1/hadiths/${collectionSelect.value}.jsonl`;
+function activeTradition() {
+  return traditionSelect.value;
 }
 
-function getShiaRecordNumber(record) {
+function activeCollectionId() {
+  return collectionSelect.value;
+}
+
+function isExcludedPreface(record) {
+  if (activeTradition() !== "shia") {
+    return false;
+  }
+
+  if (
+    activeCollectionId() === "al-kafi" &&
+    record.reference?.book_section_number === 0
+  ) {
+    return true;
+  }
+
+  if (
+    activeCollectionId() === "man-la-yahduruhu-al-faqih" &&
+    (record.reference?.chapter_name_en === "Prelude" ||
+      record.reference?.hadith_number === 0)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function getActiveFilePath() {
+  return `./corpus/${activeTradition()}/v1/hadiths/${activeCollectionId()}.jsonl`;
+}
+
+function getShiaSourceNumber(record) {
   const numberByBook = record.reference?.number_by_book;
   if (Number.isFinite(numberByBook)) {
     return numberByBook;
@@ -96,40 +127,61 @@ function getShiaRecordNumber(record) {
   return record.reference?.hadith_number ?? null;
 }
 
-function getSunniRecordNumber(record) {
+function getSunniSourceNumber(record) {
   const numericNumber = record.citation?.numeric_number;
   if (Number.isFinite(numericNumber)) {
     return numericNumber;
   }
-  const displayNumber = Number(record.citation?.display_number);
-  if (Number.isFinite(displayNumber)) {
-    return displayNumber;
-  }
-  return record.canonical_ordinal ?? null;
+  return null;
 }
 
-function getRecordNumber(record) {
-  return traditionSelect.value === "shia"
-    ? getShiaRecordNumber(record)
-    : getSunniRecordNumber(record);
+function getSourceNumber(record) {
+  return activeTradition() === "shia"
+    ? getShiaSourceNumber(record)
+    : getSunniSourceNumber(record);
+}
+
+function getViewerNumber(record, index) {
+  if (activeTradition() === "shia" && activeCollectionId() === "al-kafi") {
+    const sourceNumber = getShiaSourceNumber(record);
+    if (Number.isFinite(sourceNumber)) {
+      return sourceNumber - 1;
+    }
+  }
+
+  const sourceNumber = getSourceNumber(record);
+  if (Number.isFinite(sourceNumber)) {
+    return sourceNumber;
+  }
+
+  return index + 1;
+}
+
+function prepareRecords(records) {
+  return records
+    .filter((record) => !isExcludedPreface(record))
+    .map((record, index) => ({
+      ...record,
+      __viewerNumber: getViewerNumber(record, index),
+    }));
 }
 
 function getReferenceLabel(record) {
-  if (traditionSelect.value === "shia") {
+  if (activeTradition() === "shia") {
     return record.reference?.citation_text || record.canonical_id;
   }
   return record.citation?.citation_label || record.internal_id;
 }
 
 function getArabicText(record) {
-  if (traditionSelect.value === "shia") {
+  if (activeTradition() === "shia") {
     return record.text_ar || "Arabic text unavailable.";
   }
   return record.texts?.arabic?.full || "Arabic text unavailable.";
 }
 
 function getEnglishText(record) {
-  if (traditionSelect.value === "shia") {
+  if (activeTradition() === "shia") {
     return record.text_en || "English text unavailable.";
   }
   return (
@@ -146,7 +198,7 @@ function renderRecord(record) {
   identifierEl.textContent = record.canonical_id || record.internal_id || "-";
   arabicTextEl.textContent = getArabicText(record);
   englishTextEl.textContent = getEnglishText(record);
-  hadithInput.value = String(getRecordNumber(record) ?? "");
+  hadithInput.value = String(record.__viewerNumber ?? "");
 }
 
 async function loadHadithByInput() {
@@ -157,8 +209,8 @@ async function loadHadithByInput() {
   }
 
   setStatus("Loading hadith file…");
-  const records = await fetchJsonl(getActiveFilePath());
-  const record = records.find((entry) => getRecordNumber(entry) === requested);
+  const records = prepareRecords(await fetchJsonl(getActiveFilePath()));
+  const record = records.find((entry) => entry.__viewerNumber === requested);
 
   if (!record) {
     setStatus("No hadith matched that number in the selected collection.");
@@ -166,6 +218,10 @@ async function loadHadithByInput() {
   }
 
   renderRecord(record);
+  if (activeCollectionId() === "sahih-muslim") {
+    setStatus(`Loaded entry ${requested}. Source label: ${getReferenceLabel(record)}.`);
+    return;
+  }
   setStatus(`Loaded hadith ${requested}.`);
 }
 
@@ -176,9 +232,9 @@ async function stepRecord(direction) {
     return;
   }
 
-  const records = await fetchJsonl(getActiveFilePath());
-  const sorted = [...records].sort((a, b) => getRecordNumber(a) - getRecordNumber(b));
-  const index = sorted.findIndex((entry) => getRecordNumber(entry) === currentNumber);
+  const records = prepareRecords(await fetchJsonl(getActiveFilePath()));
+  const sorted = [...records].sort((a, b) => a.__viewerNumber - b.__viewerNumber);
+  const index = sorted.findIndex((entry) => entry.__viewerNumber === currentNumber);
 
   if (index === -1) {
     setStatus("Current hadith number is not loaded.");
@@ -192,7 +248,13 @@ async function stepRecord(direction) {
   }
 
   renderRecord(nextRecord);
-  setStatus(`Loaded hadith ${getRecordNumber(nextRecord)}.`);
+  if (activeCollectionId() === "sahih-muslim") {
+    setStatus(
+      `Loaded entry ${nextRecord.__viewerNumber}. Source label: ${getReferenceLabel(nextRecord)}.`
+    );
+    return;
+  }
+  setStatus(`Loaded hadith ${nextRecord.__viewerNumber}.`);
 }
 
 async function init() {
