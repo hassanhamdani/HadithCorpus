@@ -4,6 +4,7 @@
 
 ## Contents
 
+- `index.html`: lightweight browser viewer for selecting a collection and reading a hadith entry.
 - `corpus/shia/v1/collections/`: collection-level metadata for the Shia corpus.
 - `corpus/shia/v1/sections/`: section and chapter records in JSONL format.
 - `corpus/shia/v1/hadiths/`: hadith records in JSONL format.

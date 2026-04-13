@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HadithCorpus Viewer</title>
+    <link rel="stylesheet" href="./viewer.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">HadithCorpus</p>
+        <h1>Lightweight Hadith Viewer</h1>
+        <p class="intro">
+          Browse a collection, enter a hadith number, and view Arabic and English
+          text side by side.
+        </p>
+      </section>
+
+      <section class="panel controls">
+        <div class="control-grid">
+          <label class="field">
+            <span>Tradition</span>
+            <select id="tradition-select"></select>
+          </label>
+
+          <label class="field">
+            <span>Collection</span>
+            <select id="collection-select"></select>
+          </label>
+
+          <label class="field">
+            <span>Hadith Number</span>
+            <input
+              id="hadith-input"
+              type="text"
+              inputmode="numeric"
+              placeholder="e.g. 1"
+            />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="load-button" type="button">Load Hadith</button>
+          <button id="prev-button" type="button">Previous</button>
+          <button id="next-button" type="button">Next</button>
+        </div>
+
+        <p id="status" class="status">Loading corpus summary…</p>
+      </section>
+
+      <section class="panel meta">
+        <div class="meta-item">
+          <span class="meta-label">Reference</span>
+          <strong id="reference-label">-</strong>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Collection</span>
+          <strong id="collection-label">-</strong>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Identifier</span>
+          <strong id="identifier-label">-</strong>
+        </div>
+      </section>
+
+      <section class="viewer-grid">
+        <article class="panel text-panel">
+          <div class="text-header">
+            <h2>Arabic</h2>
+          </div>
+          <div id="arabic-text" class="text-body arabic">Select a collection and hadith number.</div>
+        </article>
+
+        <article class="panel text-panel">
+          <div class="text-header">
+            <h2>English</h2>
+          </div>
+          <div id="english-text" class="text-body">Select a collection and hadith number.</div>
+        </article>
+      </section>
+    </main>
+
+    <script src="./viewer.js"></script>
+  </body>
+</html>
