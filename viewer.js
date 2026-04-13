@@ -1,11 +1,11 @@
 const state = {
   summary: null,
-  collectionsByTradition: {},
+  collections: [],
+  collectionLookup: new Map(),
   fileCache: new Map(),
   currentRecord: null,
 };
 
-const traditionSelect = document.getElementById("tradition-select");
 const collectionSelect = document.getElementById("collection-select");
 const hadithInput = document.getElementById("hadith-input");
 const statusEl = document.getElementById("status");
@@ -29,30 +29,37 @@ function titleForCollection(collection) {
 function buildCollectionsIndex() {
   const traditions = state.summary.traditions;
   for (const [traditionId, tradition] of Object.entries(traditions)) {
-    state.collectionsByTradition[traditionId] = tradition.collections;
+    for (const collection of tradition.collections) {
+      const item = {
+        ...collection,
+        traditionId,
+      };
+      state.collections.push(item);
+      state.collectionLookup.set(collection.collection_id, item);
+    }
   }
-}
-
-function renderTraditions() {
-  traditionSelect.innerHTML = "";
-  for (const traditionId of Object.keys(state.collectionsByTradition)) {
-    const option = document.createElement("option");
-    option.value = traditionId;
-    option.textContent = traditionId[0].toUpperCase() + traditionId.slice(1);
-    traditionSelect.appendChild(option);
-  }
+  state.collections.sort((a, b) => titleForCollection(a).localeCompare(titleForCollection(b)));
 }
 
 function renderCollections() {
-  const traditionId = traditionSelect.value;
-  const collections = state.collectionsByTradition[traditionId] || [];
   collectionSelect.innerHTML = "";
-  for (const collection of collections) {
+  for (const collection of state.collections) {
     const option = document.createElement("option");
     option.value = collection.collection_id;
-    option.textContent = titleForCollection(collection);
+    option.textContent = labelForCollection(collection);
     collectionSelect.appendChild(option);
   }
+}
+
+function labelForCollection(collection) {
+  const base = titleForCollection(collection);
+  if (
+    collection.collection_id === "muwatta-malik" ||
+    collection.collection_id === "musnad-ahmad"
+  ) {
+    return `${base} [Incomplete]`;
+  }
+  return base;
 }
 
 async function fetchJson(path) {
@@ -85,7 +92,7 @@ async function fetchJsonl(path) {
 }
 
 function activeTradition() {
-  return traditionSelect.value;
+  return state.collectionLookup.get(activeCollectionId())?.traditionId ?? "";
 }
 
 function activeCollectionId() {
@@ -194,7 +201,8 @@ function getEnglishText(record) {
 function renderRecord(record) {
   state.currentRecord = record;
   referenceEl.textContent = getReferenceLabel(record);
-  collectionEl.textContent = collectionSelect.options[collectionSelect.selectedIndex]?.textContent || "-";
+  collectionEl.textContent =
+    collectionSelect.options[collectionSelect.selectedIndex]?.textContent || "-";
   identifierEl.textContent = record.canonical_id || record.internal_id || "-";
   arabicTextEl.textContent = getArabicText(record);
   englishTextEl.textContent = getEnglishText(record);
@@ -261,25 +269,12 @@ async function init() {
   try {
     state.summary = await fetchJson("./metadata/summary.json");
     buildCollectionsIndex();
-    renderTraditions();
     renderCollections();
     setStatus("Viewer ready.");
   } catch (error) {
     setStatus(`Unable to initialize viewer: ${error.message}`);
   }
 }
-
-traditionSelect.addEventListener("change", () => {
-  renderCollections();
-  state.currentRecord = null;
-  referenceEl.textContent = "-";
-  collectionEl.textContent = "-";
-  identifierEl.textContent = "-";
-  arabicTextEl.textContent = "Select a collection and hadith number.";
-  englishTextEl.textContent = "Select a collection and hadith number.";
-  hadithInput.value = "";
-  setStatus("Select a collection and hadith number.");
-});
 
 collectionSelect.addEventListener("change", () => {
   state.currentRecord = null;
